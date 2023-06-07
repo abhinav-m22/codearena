@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar/Navbar';
 import React from 'react';
 import Image from 'next/image';
+import Auth from '@/components/Modals/Auth';
 
 type AuthPageProps = {
 
@@ -16,6 +17,7 @@ const AuthPage: React.FC<AuthPageProps> = () => {
             <div className='flex items-center justify-center h-[calc(100vh-5rem)] pointer-events-none select-none'>
                 <Image src='/hero.png' alt='Hero img' width={700} height={700} />
             </div>
+            <Auth />
         </div>
     )
 
