@@ -14,7 +14,7 @@ export const problems: Problem[] = [
         difficulty: "Easy",
         category: "Array",
         order: 1,
-        videoId: "ababab",
+        videoId: "dRUpbt8vHpo",
     },
     {
         id: "reverse-linked-list",
@@ -22,7 +22,7 @@ export const problems: Problem[] = [
         difficulty: "Hard",
         category: "Linked List",
         order: 2,
-        videoId: "ababab",
+        videoId: "iRtLEoL-r-g",
     },
     {
         id: "jump-game",
@@ -30,7 +30,7 @@ export const problems: Problem[] = [
         difficulty: "Medium",
         category: "Dynamic Programming",
         order: 3,
-        videoId: "ababab",
+        videoId: "",
     },
     {
         id: "valid-parentheses",
@@ -38,7 +38,7 @@ export const problems: Problem[] = [
         difficulty: "Easy",
         category: "Stack",
         order: 4,
-        videoId: "",
+        videoId: "wkDfsKijrZ8",
     },
     {
         id: "search-a-2d-matrix",
@@ -46,7 +46,7 @@ export const problems: Problem[] = [
         difficulty: "Medium",
         category: "Binary Search",
         order: 5,
-        videoId: "ababab",
+        videoId: "ZYpYur0znng",
     },
     {
         id: "container-with-most-water",
@@ -62,7 +62,7 @@ export const problems: Problem[] = [
         difficulty: "Medium",
         category: "intervals",
         order: 7,
-        videoId: "",
+        videoId: "2JzRBPFYbKE",
     },
     {
         id: "maximum-depth-of-binary-tree",
@@ -70,7 +70,7 @@ export const problems: Problem[] = [
         difficulty: "Easy",
         category: "Tree",
         order: 8,
-        videoId: "ababab",
+        videoId: "",
     },
     {
         id: "best-time-to-buy-and-sell-stock",
