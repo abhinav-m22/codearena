@@ -5,6 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import Logout from '../Buttons/Logout';
 import { useSetRecoilState } from 'recoil';
 import { AuthModalState } from '@/atoms/AuthModalAtom';
+import Image from 'next/image';
 
 type TopbarProps = {
 
@@ -36,14 +37,14 @@ const Topbar: React.FC<TopbarProps> = () => {
                     </div>
                     {!user && (
                         <Link href='/auth' onClick={() => {
-                            setAuthModalState((prev) => ({ ...prev, isOpen: true }));
+                            setAuthModalState((prev) => ({ ...prev, isOpen: true, type: 'login' }));
                         }}>
                             <button className='bg-dark-fill-3 py-1 px-2 cursor-pointer rounded'>Sign In</button>
                         </Link>
                     )}
                     {user && (
                         <div className='cursor-pointer group relative'>
-                            <img src="/avatar.png" alt="profile image" className='h-8 w-8 rounded-full' />
+                            <Image src="/avatar.png" alt='profile image' height={30} width={30} className='rounded-full' />
                             <div
                                 className='absolute top-10 left-2/4 -translate-x-2/4  mx-auto bg-dark-layer-1 text-brand-orange p-2 rounded shadow-lg z-40 group-hover:scale-100 scale-0 
 		transition-all duration-300 ease-in-out'
