@@ -4,6 +4,7 @@ import Split from 'react-split';
 import CodeMirror from '@uiw/react-codemirror';
 import { vscodeDark } from '@uiw/codemirror-theme-vscode';
 import { javascript } from '@codemirror/lang-javascript';
+import EditorFooter from './EditorFooter';
 
 type PlaygroundProps = {
 
@@ -11,14 +12,18 @@ type PlaygroundProps = {
 
 const Playground: React.FC<PlaygroundProps> = () => {
 
+    const boilerplate = `function twoSum(vector<int> nums, int target){
+    // Write your code here
+}`;
+
     return (
-        <div className='flex flex-col bg-dark-layer-1 relative'>
+        <div className='flex flex-col bg-dark-layer-1 relative overflow-x-hidden'>
             <PreferenceNav />
 
             <Split className='h-[calc(100vh-94px)]' direction='vertical' sizes={[60, 40]} minSize={60}>
                 <div className='w-full overflow-auto'>
                     <CodeMirror
-                        value='const a = 1;'
+                        value={boilerplate}
                         theme={vscodeDark}
                         extensions={[javascript()]}
                         style={{ fontSize: 16 }}
@@ -84,6 +89,7 @@ const Playground: React.FC<PlaygroundProps> = () => {
 
                 </div>
             </Split>
+            <EditorFooter />
         </div>
     );
 }
