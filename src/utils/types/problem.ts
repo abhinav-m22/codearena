@@ -17,3 +17,15 @@ export type Problem = {
     handlerFunction: ((fn: any) => boolean) | string;
     starterFunctionName: string;
 };
+
+export type DBProblem = {
+    id: string;
+    title: string;
+    category: string;
+    difficulty: string;
+    order: number;
+    likes: number;
+    dislikes: number;
+    videoId?: string;
+    link?: string;
+};
