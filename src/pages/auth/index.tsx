@@ -9,7 +9,6 @@ import { auth } from '@/firebase/firebase';
 import { useRouter } from 'next/router';
 
 type AuthPageProps = {
-
 };
 
 const AuthPage: React.FC<AuthPageProps> = () => {
