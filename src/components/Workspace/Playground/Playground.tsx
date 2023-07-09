@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PreferenceNav from './PreferenceNav/PreferenceNav';
 import Split from 'react-split';
 import CodeMirror from '@uiw/react-codemirror';
@@ -24,7 +24,7 @@ const Playground: React.FC<PlaygroundProps> = ({ problem, setSuccess, setSolved 
     const [user] = useAuthState(auth);
 
     const [activeTestCase, setActiveTestCase] = useState<number>(0);
-    const [userCode, setUserCode] = useState<string>(problem.starterCode);
+    let [userCode, setUserCode] = useState<string>(problem.starterCode);
 
     const { query: { pid } } = useRouter();
 
@@ -39,27 +39,35 @@ const Playground: React.FC<PlaygroundProps> = ({ problem, setSuccess, setSolved 
             return;
         }
         try {
+
+            userCode = userCode.slice(userCode.indexOf(problem.starterFunctionName))
+
             const cb = new Function(`return ${userCode}`)();
-            const success = problems[pid as string].handlerFunction(cb);
+            const handler = problems[pid as string].handlerFunction;
 
-            if (success) {
-                toast.success('Congratulations! You have successfully solved the problem.', {
-                    position: 'top-center',
-                    autoClose: 3000,
-                    theme: 'dark'
+            if (typeof handler === 'function') {
+                const success = handler(cb);
+
+
+                if (success) {
+                    toast.success('Congratulations! You have successfully solved the problem.', {
+                        position: 'top-center',
+                        autoClose: 3000,
+                        theme: 'dark'
+                    });
+                    setSuccess(true);
+                    setTimeout(() => {
+                        setSuccess(false);
+                    }, 4000);
+                }
+
+                const userRef = doc(firestore, 'users', user.uid);
+                await updateDoc(userRef, {
+                    solvedProblems: arrayUnion(pid),
                 });
-                setSuccess(true);
-                setTimeout(() => {
-                    setSuccess(false);
-                }, 4000);
+
+                setSolved(true);
             }
-
-            const userRef = doc(firestore, 'users', user.uid);
-            await updateDoc(userRef, {
-                solvedProblems: arrayUnion(pid),
-            });
-
-            setSolved(true);
 
         } catch (error: any) {
             // console.log(error);
@@ -80,12 +88,22 @@ const Playground: React.FC<PlaygroundProps> = ({ problem, setSuccess, setSolved 
                 });
             }
         }
-    }
+    };
+
+    useEffect(() => {
+        const code = localStorage.getItem(`code-${pid}`);
+        if (user) {
+            setUserCode(code ? JSON.parse(code) : problem.starterCode);
+        } else {
+            setUserCode(problem.starterCode);
+        }
+    }, [pid, user, problem.starterCode]);
 
     const handleOnChange = (value: string) => {
         // console.log(value);
         setUserCode(value);
-    }
+        localStorage.setItem(`code-${pid}`, JSON.stringify(value));
+    };
 
     return (
         <div className='flex flex-col bg-dark-layer-1 relative overflow-x-hidden'>
@@ -94,7 +112,7 @@ const Playground: React.FC<PlaygroundProps> = ({ problem, setSuccess, setSolved 
             <Split className='h-[calc(100vh-94px)]' direction='vertical' sizes={[60, 40]} minSize={60}>
                 <div className='w-full overflow-auto'>
                     <CodeMirror
-                        value={problem.starterCode}
+                        value={userCode}
                         theme={vscodeDark}
                         extensions={[javascript()]}
                         style={{ fontSize: 16 }}

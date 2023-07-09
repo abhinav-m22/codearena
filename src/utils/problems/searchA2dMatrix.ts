@@ -35,7 +35,7 @@ export const search2DMatrixHandler = (fn: any) => {
     }
 };
 const starterCodeSearch2DMatrixJS = `// Do not edit function name
-function searchMatrix(vector<vector<int>>& matrix, int target) {
+function searchMatrix(matrix, target) {
   // Write your code here
 };`;
 

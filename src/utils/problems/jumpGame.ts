@@ -21,7 +21,7 @@ export const jumpGameHandler = (fn: any) => {
     }
 };
 
-const starterCodeJumpGameJS = `function canJump(vector<int> nums) {
+const starterCodeJumpGameJS = `function canJump(nums) {
   // Write your code here
 };`;
 
