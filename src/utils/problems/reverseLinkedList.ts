@@ -70,7 +70,7 @@ const starterCodeReverseLinkedListJS = `
  * }
  */
 // Do not edit function name
-function reverseLinkedList(ListNode* head) {
+function reverseLinkedList(head) {
   // Write your code here
 };`;
 
