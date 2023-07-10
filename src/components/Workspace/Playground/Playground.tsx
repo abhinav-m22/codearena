@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { problems } from '@/utils/problems';
 import { useRouter } from 'next/router';
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 type PlaygroundProps = {
     problem: Problem;
@@ -19,12 +20,26 @@ type PlaygroundProps = {
     setSolved: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+export interface ISettings {
+    fontSize: string;
+    isSettingsOpen: boolean;
+    isDropDownOpen: boolean;
+}
+
 const Playground: React.FC<PlaygroundProps> = ({ problem, setSuccess, setSolved }) => {
 
     const [user] = useAuthState(auth);
 
     const [activeTestCase, setActiveTestCase] = useState<number>(0);
     let [userCode, setUserCode] = useState<string>(problem.starterCode);
+    
+    const[fontSize, setFontSize] = useLocalStorage("slc-font-size", "16px");
+
+    const[settings, setSettings] = useState<ISettings>({
+        fontSize: fontSize,
+        isSettingsOpen: false,
+        isDropDownOpen: false,
+    });
 
     const { query: { pid } } = useRouter();
 
@@ -107,7 +122,7 @@ const Playground: React.FC<PlaygroundProps> = ({ problem, setSuccess, setSolved 
 
     return (
         <div className='flex flex-col bg-dark-layer-1 relative overflow-x-hidden'>
-            <PreferenceNav />
+            <PreferenceNav settings={settings} setSettings={setSettings} />
 
             <Split className='h-[calc(100vh-94px)]' direction='vertical' sizes={[60, 40]} minSize={60}>
                 <div className='w-full overflow-auto'>
@@ -115,7 +130,7 @@ const Playground: React.FC<PlaygroundProps> = ({ problem, setSuccess, setSolved 
                         value={userCode}
                         theme={vscodeDark}
                         extensions={[javascript()]}
-                        style={{ fontSize: 16 }}
+                        style={{ fontSize: settings.fontSize }}
                         onChange={handleOnChange}
                     />
                 </div>
