@@ -4,7 +4,7 @@ import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Logout from '../Buttons/Logout';
 import { useSetRecoilState } from 'recoil';
-import { AuthModalState } from '@/atoms/AuthModalAtom';
+import { authModalState } from '@/atoms/authModalAtom';
 import Image from 'next/image';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { BsList } from 'react-icons/bs';
@@ -12,6 +12,7 @@ import Timer from '../Timer/Timer';
 import { useRouter } from 'next/router';
 import { problems } from '@/utils/problems';
 import { Problem } from '@/utils/types/problem';
+import logo from '../../../public/logo.png'
 
 type TopbarProps = {
     problemPage?: boolean;
@@ -21,7 +22,7 @@ const Topbar: React.FC<TopbarProps> = ({ problemPage }) => {
 
     const [user] = useAuthState(auth);
 
-    const setAuthModalState = useSetRecoilState(AuthModalState);
+    const setAuthModalState = useSetRecoilState(authModalState);
     const router = useRouter();
 
     const handleProblemChange = (isForward: boolean) => {
@@ -37,21 +38,21 @@ const Topbar: React.FC<TopbarProps> = ({ problemPage }) => {
             router.push(`/problems/${firstProblemKey}`);
         }
         else if (!isForward && !nextProblemKey) {
-			const lastProblemKey = Object.keys(problems).find(
-				(key) => problems[key].order === Object.keys(problems).length
-			);
-			router.push(`/problems/${lastProblemKey}`);
-		} 
+            const lastProblemKey = Object.keys(problems).find(
+                (key) => problems[key].order === Object.keys(problems).length
+            );
+            router.push(`/problems/${lastProblemKey}`);
+        }
         else {
-			router.push(`/problems/${nextProblemKey}`);
-		}
+            router.push(`/problems/${nextProblemKey}`);
+        }
     }
 
     return (
         <nav className='relative flex h-[50px] w-full shrink-0 items-center px-5 bg-dark-layer-1 text-dark-gray-7'>
             <div className={`flex w-full items-center justify-between {${!problemPage ? 'max-w-[1200px] mx-auto' : ''}}`}>
                 <Link href='/' className='h-[22px] flex-1'>
-                    Sleetcode
+                    <Image src={logo} alt='Logo' width={150} height={130} />
                 </Link>
 
                 {problemPage && (

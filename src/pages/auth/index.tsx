@@ -2,7 +2,7 @@ import Navbar from '@/components/Navbar/Navbar';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Auth from '@/components/Modals/Auth';
-import { AuthModalState } from '@/atoms/AuthModalAtom';
+import { authModalState } from '@/atoms/authModalAtom';
 import { useRecoilValue } from 'recoil';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase/firebase';
@@ -14,7 +14,7 @@ type AuthPageProps = {
 
 const AuthPage: React.FC<AuthPageProps> = () => {
 
-    const authModal = useRecoilValue(AuthModalState)
+    const authModal = useRecoilValue(authModalState)
     const [user, loading, error] = useAuthState(auth);
     const [pageLoading, setPageLoading] = useState(true);
 
@@ -23,7 +23,7 @@ const AuthPage: React.FC<AuthPageProps> = () => {
     useEffect(() => {
         if(user) router.push('/');
         if(!loading && !user) setPageLoading(false);
-    }, [user, router]);
+    }, [user, router, loading]);
 
     if(pageLoading) return null;
     return (

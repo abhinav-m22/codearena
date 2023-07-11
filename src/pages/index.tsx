@@ -50,8 +50,8 @@ export default function Home() {
       <main className="bg-dark-layer-2 min-h-screen">
         <Topbar />
         <h1
-          className='text-2xl text-center text-gray-700 dark:text-gray-400 font-medium uppercase mt-10 mb-5'>
-          &ldquo; QUALITY OVER QUANTITY &rdquo;
+          className='text-2xl text-center text-gray-300 dark:text-gray-400 font-medium uppercase mt-10 mb-5'>
+          &ldquo;Level Up Your DSA Proficiency and Excel in Coding!&rdquo;
         </h1>
 
         <div className='relative overflow-x-auto mx-auto px-6 pb-10'>

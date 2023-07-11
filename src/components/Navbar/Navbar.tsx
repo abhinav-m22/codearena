@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { useSetRecoilState } from 'recoil';
-import { AuthModalState } from '@/atoms/AuthModalAtom';
+import { authModalState } from '@/atoms/authModalAtom';
+import Image from 'next/image';
+import logo from '../../../public/logo.png'
 
 type NavbarProps = {
     
@@ -9,7 +11,7 @@ type NavbarProps = {
 
 const Navbar:React.FC<NavbarProps> = () => {
 
-    const setAuthModalState = useSetRecoilState(AuthModalState);
+    const setAuthModalState = useSetRecoilState(authModalState);
     const handleClick = () => {
         setAuthModalState((prev) => ({ ...prev, isOpen: true}));
     }
@@ -17,7 +19,7 @@ const Navbar:React.FC<NavbarProps> = () => {
     return (
         <div className='flex items-center justify-between sm:px-12 px-2 md:px-24'>
             <Link href='/' className='flex items-center justify-center h-20'>
-                SleetCode
+                <Image src={logo} alt='Logo' width={200} height={200} />
             </Link>
             <div className='flex items-center'>
 				<button

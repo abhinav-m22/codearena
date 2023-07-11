@@ -1,4 +1,4 @@
-import { AuthModalState } from '@/atoms/AuthModalAtom';
+import { authModalState } from '@/atoms/authModalAtom';
 import React, { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
@@ -15,7 +15,7 @@ const Signup: React.FC<SignupProps> = () => {
 
     const router = useRouter();
 
-    const setAuthModalState = useSetRecoilState(AuthModalState);
+    const setAuthModalState = useSetRecoilState(authModalState);
 
 	const handleClick = () => {
 		setAuthModalState((prev) => ({...prev, type: 'login'}));
@@ -77,7 +77,7 @@ const Signup: React.FC<SignupProps> = () => {
 
     return (
         <form className='space-y-6 px-6 pb-4' onSubmit={handleRegister}>
-            <h3 className='text-xl font-medium text-white'>Register on Sleetcode</h3>
+            <h3 className='text-xl font-medium text-white'>Register on CodeArena</h3>
             <div>
                 <label htmlFor='email' className='text-sm font-medium block mb-2 text-gray-300'>
                     Email
