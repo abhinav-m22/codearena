@@ -13,6 +13,8 @@ import { useRouter } from 'next/router';
 import { problems } from '@/utils/problems';
 import { Problem } from '@/utils/types/problem';
 import logo from '../../../public/logo.png'
+import { IoMdNotificationsOutline } from 'react-icons/io';
+import { FaMedal } from 'react-icons/fa';
 
 type TopbarProps = {
     problemPage?: boolean;
@@ -81,13 +83,17 @@ const Topbar: React.FC<TopbarProps> = ({ problemPage }) => {
                 <div className='flex items-center space-x-4 flex-1 justify-end'>
                     <div>
                         <a
-                            href='https://www.buymeacoffee.com/burakorkmezz'
+                            href='https://www.leetcode.com/contest'
                             target='_blank'
                             rel='noreferrer'
                             className='bg-dark-fill-3 py-1.5 px-3 cursor-pointer rounded text-brand-orange hover:bg-dark-fill-2'
                         >
-                            Premium
+                            <FaMedal className='inline-block mr-1' />
+                            Contests
                         </a>
+                    </div>
+                    <div className='flex items-center justify-center rounded bg-dark-fill-2 hover:bg-dark-divider-border-2 h-8 w-8 cursor-pointer'>
+                        <IoMdNotificationsOutline />
                     </div>
                     {!user && (
                         <Link href='/auth' onClick={() => {
