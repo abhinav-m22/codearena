@@ -37,8 +37,8 @@ const handleTwoSum = (fn: any) => {
 }
 
 export const twoSum: Problem = {
-    id: "twoSum",
-    title: "1. Two Sum",
+    id: "two-sum",
+    title: "5. Two Sum",
     problemStatement: `<p class='mt-3'>
     Given an array of integers <code>nums</code> and an integer <code>target</code>, return 
     <em> indices of the two numbers such that they add up to</em> <code>target</code>.
