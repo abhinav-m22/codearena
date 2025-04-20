@@ -34,7 +34,7 @@ export default function Home() {
       <section className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-[#1E1E1E] border-b border-[#333]">
         <div className="max-w-[1300px] mx-auto px-5 text-center">
           <h1 className="text-[3.5rem] leading-tight font-mono text-[#7cfc00] mb-8 tracking-tight">
-            "LEVEL UP YOUR DSA PROFICIENCY AND EXCEL IN CODING!"
+            &ldquo;LEVEL UP YOUR DSA PROFICIENCY AND EXCEL IN CODING!&rdquo;
           </h1>
           <p className="text-[1.25rem] text-[#ccc] max-w-[800px] mx-auto mb-12 leading-relaxed font-mono">
             Challenge yourself with problems of varying difficulty and become 
@@ -176,8 +176,8 @@ export default function Home() {
             <div className="p-5 overflow-x-auto">
               <pre className="text-sm font-mono">
                 <code className="text-[#e0e0e0]">
-                  <span className="text-[#7f848e]">// Problem: Two Sum</span>{"\n"}
-                  <span className="text-[#7f848e]">// Find two numbers in the array that add up to the target</span>{"\n\n"}
+                  <span className="text-[#7f848e]">{/* Problem: Two Sum */}</span>{"\n"}
+                  <span className="text-[#7f848e]">{/* Find two numbers in the array that add up to the target */}</span>{"\n\n"}
                   <span className="text-[#c678dd]">function</span> <span className="text-[#61afef]">twoSum</span>(nums, target) {"{"}{"\n"}
                   {"  "}<span className="text-[#c678dd]">const</span> map = <span className="text-[#c678dd]">new</span> Map();{"\n\n"}
                   {"  "}<span className="text-[#c678dd]">for</span> (<span className="text-[#c678dd]">let</span> i = <span className="text-[#d19a66]">0</span>; i {"<"} nums.length; i++) {"{"}{"\n"}
@@ -187,11 +187,11 @@ export default function Home() {
                   {"    "}{"}"}{"\n\n"}
                   {"    "}map.set(nums[i], i);{"\n"}
                   {"  "}{"}"}{"\n\n"}
-                  {"  "}<span className="text-[#c678dd]">return</span> []; <span className="text-[#7f848e]">// No solution found</span>{"\n"}
+                  {"  "}<span className="text-[#c678dd]">return</span> []; <span className="text-[#7f848e]">{/* No solution found */}</span>{"\n"}
                   {"}"}{"\n\n"}
-                  <span className="text-[#7f848e]">// Test cases</span>{"\n"}
-                  console.log(twoSum([<span className="text-[#d19a66]">2</span>, <span className="text-[#d19a66]">7</span>, <span className="text-[#d19a66]">11</span>, <span className="text-[#d19a66]">15</span>], <span className="text-[#d19a66]">9</span>)); <span className="text-[#7f848e]">// Output: [0, 1]</span>{"\n"}
-                  console.log(twoSum([<span className="text-[#d19a66]">3</span>, <span className="text-[#d19a66]">2</span>, <span className="text-[#d19a66]">4</span>], <span className="text-[#d19a66]">6</span>));      <span className="text-[#7f848e]">// Output: [1, 2]</span>
+                  <span className="text-[#7f848e]">{/* Test cases */}</span>{"\n"}
+                  console.log(twoSum([<span className="text-[#d19a66]">2</span>, <span className="text-[#d19a66]">7</span>, <span className="text-[#d19a66]">11</span>, <span className="text-[#d19a66]">15</span>], <span className="text-[#d19a66]">9</span>)); <span className="text-[#7f848e]">{/* Output: [0, 1] */}</span>{"\n"}
+                  console.log(twoSum([<span className="text-[#d19a66]">3</span>, <span className="text-[#d19a66]">2</span>, <span className="text-[#d19a66]">4</span>], <span className="text-[#d19a66]">6</span>));      <span className="text-[#7f848e]">{/* Output: [1, 2] */}</span>
                 </code>
               </pre>
             </div>
