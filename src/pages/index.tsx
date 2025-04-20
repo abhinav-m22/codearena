@@ -3,114 +3,212 @@ import Topbar from "@/components/Topbar/Topbar";
 import { firestore } from "@/firebase/firebase";
 import useHasMounted from "@/hooks/useHasMounted";
 import { doc, setDoc } from "firebase/firestore";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Home() {
-
-  // const [inputs, setInputs] = useState({
-  //   id: '',
-  //   title: '',
-  //   difficulty: '',
-  //   category: '',
-  //   order: 0,
-  //   videoId: '',
-  //   link: '',
-  //   likes: 0,
-  //   dislikes: 0,
-  // });
-
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setInputs({
-  //     ...inputs,
-  //     [e.target.name]: e.target.value
-  //   });
-
-  //   console.log(inputs);
-    
-  // }
-
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const newProblem = {
-  //     ...inputs,
-  //     order: Number(inputs.order),
-  //   }
-  //   await setDoc(doc(firestore, "problems", inputs.id), newProblem);
-  //   alert('saved to db');
-  // }
-
-  const[loadingProblem, setLoadingProblems] = useState(true);
-
+  const [loadingProblem, setLoadingProblems] = useState(true);
+  const [activeFilter, setActiveFilter] = useState("all");
   const hasMounted = useHasMounted();
+  const problemsRef = useRef<HTMLDivElement>(null);
+
+  const scrollToProblems = () => {
+    problemsRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleFilter = (difficulty: string) => {
+    setActiveFilter(difficulty);
+    // Here you would typically filter the problems based on difficulty
+    // For now, we'll just update the UI state
+  };
 
   if (!hasMounted) return null;
 
   return (
-    <>
-      <main className="bg-dark-layer-2 min-h-screen">
-        <Topbar />
-        <h1
-          className='text-2xl text-center text-gray-300 dark:text-gray-400 font-medium uppercase mt-10 mb-5'>
-          &ldquo;Level Up Your DSA Proficiency and Excel in Coding!&rdquo;
-        </h1>
-
-        <div className='relative overflow-x-auto mx-auto px-6 pb-10'>
-          {loadingProblem && 
-          <div className="animate-pulse max-w-[1200px] mx-auto sm:w-7/12 w-full">
-            {[...Array(10)].map((_, i) => (
-              <LoadingSkeleton key={i} />
-            ))}
-          </div>  
-          }
-          <table className='text-sm text-left text-gray-500 dark:text-gray-400 sm:w-7/12 w-full max-w-[1200px] mx-auto'>
-            <thead className='text-xs text-gray-700 uppercase dark:text-gray-400 border-b '>
-              <tr>
-                <th scope='col' className='px-1 py-3 w-0 font-medium'>
-                  Status
-                </th>
-                <th scope='col' className='px-6 py-3 w-0 font-medium'>
-                  Title
-                </th>
-                <th scope='col' className='px-6 py-3 w-0 font-medium'>
-                  Difficulty
-                </th>
-
-                <th scope='col' className='px-6 py-3 w-0 font-medium'>
-                  Category
-                </th>
-                <th scope='col' className='px-6 py-3 w-0 font-medium'>
-                  Solution
-                </th>
-              </tr>
-            </thead>
-            <ProblemsTable setLoadingProblems={setLoadingProblems} />
-          </table>
+    <main className="min-h-screen bg-[#1a1a1a] text-[#e0e0e0]">
+      <header className="bg-[#222] border-b border-[#333] sticky top-0 z-50">
+        <div className="max-w-[1300px] mx-auto px-5">
+          <Topbar />
         </div>
+      </header>
 
-        {/* Temporary form */}
-        {/* <form className="p-6 flex flex-col max-w-sm gap-3" onSubmit={handleSubmit}>
-          <input onChange={handleInputChange} type="text" placeholder="problem id" name="id" />
-          <input onChange={handleInputChange} type="text" placeholder="title" name="title" />
-          <input onChange={handleInputChange} type="text" placeholder="difficulty" name="difficulty" />
-          <input onChange={handleInputChange} type="text" placeholder="category" name="category" />
-          <input onChange={handleInputChange} type="text" placeholder="order" name="order" />
-          <input onChange={handleInputChange} type="text" placeholder="videoId?" name="videoId" />
-          <input onChange={handleInputChange} type="text" placeholder="link" name="link" />
-          <button className="bg-white">Save To DB</button>
-        </form> */}
-      </main>
-    </>
-  )
+      <section className="py-16 text-center bg-gradient-to-b from-[#1a1a1a]/90 to-[#1a1a1a]/95 border-b border-[#333]">
+        <div className="max-w-[1300px] mx-auto px-5">
+          <h1 className="text-4xl font-bold text-[#7cfc00] tracking-wider mb-8">
+            Level Up Your DSA Proficiency
+          </h1>
+          <p className="text-xl text-[#ccc] max-w-[700px] mx-auto mb-10 leading-relaxed">
+            Master Data Structures and Algorithms through practice. Solve problems, compete with others, and excel in coding interviews.
+          </p>
+          <div className="flex justify-center gap-5 mb-10">
+            <button 
+              onClick={scrollToProblems}
+              className="px-6 py-3 bg-[#ff8c00] text-[#222] font-semibold rounded-md hover:bg-[#ff9f33] transition-all hover:-translate-y-0.5"
+            >
+              Start Practicing
+            </button>
+            <button 
+              onClick={scrollToProblems}
+              className="px-6 py-3 border-2 border-[#ff8c00] text-[#ff8c00] font-semibold rounded-md hover:bg-[#ff8c00]/10 transition-all hover:-translate-y-0.5"
+            >
+              View Problems
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section ref={problemsRef} className="py-10">
+        <div className="max-w-[1300px] mx-auto px-5">
+          <div className="flex justify-between items-center mb-5">
+            <h2 className="text-2xl text-[#e0e0e0]">Problems</h2>
+            <div className="flex gap-3">
+              <button 
+                onClick={() => handleFilter("all")}
+                className={`px-4 py-2 bg-[#2a2a2a] border border-[#444] text-[#ccc] rounded-md transition-all ${
+                  activeFilter === "all" ? "bg-[#333] border-[#ff8c00] text-[#ff8c00]" : "hover:bg-[#333] hover:border-[#ff8c00] hover:text-[#ff8c00]"
+                }`}
+              >
+                All
+              </button>
+              <button 
+                onClick={() => handleFilter("easy")}
+                className={`px-4 py-2 bg-[#2a2a2a] border border-[#444] text-[#ccc] rounded-md transition-all ${
+                  activeFilter === "easy" ? "bg-[#333] border-[#ff8c00] text-[#ff8c00]" : "hover:bg-[#333] hover:border-[#ff8c00] hover:text-[#ff8c00]"
+                }`}
+              >
+                Easy
+              </button>
+              <button 
+                onClick={() => handleFilter("medium")}
+                className={`px-4 py-2 bg-[#2a2a2a] border border-[#444] text-[#ccc] rounded-md transition-all ${
+                  activeFilter === "medium" ? "bg-[#333] border-[#ff8c00] text-[#ff8c00]" : "hover:bg-[#333] hover:border-[#ff8c00] hover:text-[#ff8c00]"
+                }`}
+              >
+                Medium
+              </button>
+              <button 
+                onClick={() => handleFilter("hard")}
+                className={`px-4 py-2 bg-[#2a2a2a] border border-[#444] text-[#ccc] rounded-md transition-all ${
+                  activeFilter === "hard" ? "bg-[#333] border-[#ff8c00] text-[#ff8c00]" : "hover:bg-[#333] hover:border-[#ff8c00] hover:text-[#ff8c00]"
+                }`}
+              >
+                Hard
+              </button>
+            </div>
+          </div>
+
+          <div className="relative overflow-x-auto">
+            {loadingProblem && (
+              <div className="animate-pulse max-w-[1200px] mx-auto">
+                {[...Array(10)].map((_, i) => (
+                  <LoadingSkeleton key={i} />
+                ))}
+              </div>
+            )}
+            <table className="w-full text-sm text-left">
+              <thead className="text-xs uppercase border-b border-[#333]">
+                <tr className="bg-[#2a2a2a]">
+                  <th scope="col" className="px-1 py-3 w-0 font-medium text-[#ccc]">
+                    Status
+                  </th>
+                  <th scope="col" className="px-6 py-3 w-0 font-medium text-[#ccc]">
+                    Title
+                  </th>
+                  <th scope="col" className="px-6 py-3 w-0 font-medium text-[#ccc]">
+                    Difficulty
+                  </th>
+                  <th scope="col" className="px-6 py-3 w-0 font-medium text-[#ccc]">
+                    Category
+                  </th>
+                  <th scope="col" className="px-6 py-3 w-0 font-medium text-[#ccc]">
+                    Solution
+                  </th>
+                </tr>
+              </thead>
+              <ProblemsTable setLoadingProblems={setLoadingProblems} />
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-[#222] border-t border-b border-[#333]">
+        <div className="max-w-[1300px] mx-auto px-5">
+          <h2 className="text-3xl text-center text-[#e0e0e0] mb-12">Why CodeArena?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="bg-[#2a2a2a] border border-[#333] rounded-lg p-6 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all">
+              <div className="text-3xl mb-4 text-[#ff8c00]">📚</div>
+              <h3 className="text-xl text-[#e0e0e0] mb-3">Diverse Question Collection</h3>
+              <p className="text-[#bbb]">Access a wide range of data structures and algorithms questions to strengthen your problem-solving skills.</p>
+            </div>
+            <div className="bg-[#2a2a2a] border border-[#333] rounded-lg p-6 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all">
+              <div className="text-3xl mb-4 text-[#ff8c00]">🎯</div>
+              <h3 className="text-xl text-[#e0e0e0] mb-3">Difficulty Levels</h3>
+              <p className="text-[#bbb]">Problems categorized into easy, medium, and hard difficulty levels to match your current skill level.</p>
+            </div>
+            <div className="bg-[#2a2a2a] border border-[#333] rounded-lg p-6 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all">
+              <div className="text-3xl mb-4 text-[#ff8c00]">⚡</div>
+              <h3 className="text-xl text-[#e0e0e0] mb-3">Code Execution</h3>
+              <p className="text-[#bbb]">Run JavaScript code and validate against test cases to ensure your solution is correct and optimal.</p>
+            </div>
+            <div className="bg-[#2a2a2a] border border-[#333] rounded-lg p-6 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all">
+              <div className="text-3xl mb-4 text-[#ff8c00]">🔒</div>
+              <h3 className="text-xl text-[#e0e0e0] mb-3">User Authentication</h3>
+              <p className="text-[#bbb]">Sign up, log in, and enjoy a personalized coding experience with progress tracking and achievements.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-[#1a1a1a]">
+        <div className="max-w-[1300px] mx-auto px-5">
+          <div className="bg-[#222] border border-[#333] rounded-lg overflow-hidden shadow-lg">
+            <div className="bg-[#333] px-5 py-3 flex justify-between items-center border-b border-[#444]">
+              <div className="flex items-center gap-2 text-[#ccc]">
+                <span className="text-[#ff8c00]">📄</span>
+                twoSum.js
+              </div>
+              <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+              </div>
+            </div>
+            <div className="p-5 overflow-x-auto">
+              <pre className="text-sm font-mono">
+                <code className="text-[#e0e0e0]">
+                  <span className="text-[#7f848e]">// Problem: Two Sum</span>{"\n"}
+                  <span className="text-[#7f848e]">// Find two numbers in the array that add up to the target</span>{"\n\n"}
+                  <span className="text-[#c678dd]">function</span> <span className="text-[#61afef]">twoSum</span>(nums, target) {"{"}{"\n"}
+                  {"  "}<span className="text-[#c678dd]">const</span> map = <span className="text-[#c678dd]">new</span> Map();{"\n\n"}
+                  {"  "}<span className="text-[#c678dd]">for</span> (<span className="text-[#c678dd]">let</span> i = <span className="text-[#d19a66]">0</span>; i {"<"} nums.length; i++) {"{"}{"\n"}
+                  {"    "}<span className="text-[#c678dd]">const</span> complement = target - nums[i];{"\n\n"}
+                  {"    "}<span className="text-[#c678dd]">if</span> (map.has(complement)) {"{"}{"\n"}
+                  {"      "}<span className="text-[#c678dd]">return</span> [map.get(complement), i];{"\n"}
+                  {"    "}{"}"}{"\n\n"}
+                  {"    "}map.set(nums[i], i);{"\n"}
+                  {"  "}{"}"}{"\n\n"}
+                  {"  "}<span className="text-[#c678dd]">return</span> []; <span className="text-[#7f848e]">// No solution found</span>{"\n"}
+                  {"}"}{"\n\n"}
+                  <span className="text-[#7f848e]">// Test cases</span>{"\n"}
+                  console.log(twoSum([<span className="text-[#d19a66]">2</span>, <span className="text-[#d19a66]">7</span>, <span className="text-[#d19a66]">11</span>, <span className="text-[#d19a66]">15</span>], <span className="text-[#d19a66]">9</span>)); <span className="text-[#7f848e]">// Output: [0, 1]</span>{"\n"}
+                  console.log(twoSum([<span className="text-[#d19a66]">3</span>, <span className="text-[#d19a66]">2</span>, <span className="text-[#d19a66]">4</span>], <span className="text-[#d19a66]">6</span>));      <span className="text-[#7f848e]">// Output: [1, 2]</span>
+                </code>
+              </pre>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
 }
 
 const LoadingSkeleton = () => {
-	return (
-		<div className='flex items-center space-x-12 mt-4 px-6'>
-			<div className='w-6 h-6 shrink-0 rounded-full bg-dark-layer-1'></div>
-			<div className='h-4 sm:w-52  w-32  rounded-full bg-dark-layer-1'></div>
-			<div className='h-4 sm:w-52  w-32 rounded-full bg-dark-layer-1'></div>
-			<div className='h-4 sm:w-52 w-32 rounded-full bg-dark-layer-1'></div>
-			<span className='sr-only'>Loading...</span>
-		</div>
-	);
+  return (
+    <div className="flex items-center space-x-12 mt-4 px-6">
+      <div className="w-6 h-6 shrink-0 rounded-full bg-[#222]"></div>
+      <div className="h-4 sm:w-52 w-32 rounded-full bg-[#222]"></div>
+      <div className="h-4 sm:w-52 w-32 rounded-full bg-[#222]"></div>
+      <div className="h-4 sm:w-52 w-32 rounded-full bg-[#222]"></div>
+      <span className="sr-only">Loading...</span>
+    </div>
+  );
 };
