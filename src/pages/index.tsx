@@ -24,33 +24,34 @@ export default function Home() {
   if (!hasMounted) return null;
 
   return (
-    <main className="min-h-screen bg-[#1a1a1a] text-[#e0e0e0]">
+    <main className="min-h-screen bg-[#1a1a1a] text-[#e0e0e0] font-mono">
       <header className="bg-[#222] border-b border-[#333] sticky top-0 z-50">
         <div className="max-w-[1300px] mx-auto px-5">
           <Topbar />
         </div>
       </header>
 
-      <section className="py-16 text-center bg-gradient-to-b from-[#1a1a1a]/90 to-[#1a1a1a]/95 border-b border-[#333]">
-        <div className="max-w-[1300px] mx-auto px-5">
-          <h1 className="text-4xl font-bold text-[#7cfc00] tracking-wider mb-8">
-            Level Up Your DSA Proficiency
+      <section className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-[#1E1E1E] border-b border-[#333]">
+        <div className="max-w-[1300px] mx-auto px-5 text-center">
+          <h1 className="text-[3.5rem] leading-tight font-mono text-[#7cfc00] mb-8 tracking-tight">
+            "LEVEL UP YOUR DSA PROFICIENCY AND EXCEL IN CODING!"
           </h1>
-          <p className="text-xl text-[#ccc] max-w-[700px] mx-auto mb-10 leading-relaxed">
-            Master Data Structures and Algorithms through practice. Solve problems, compete with others, and excel in coding interviews.
+          <p className="text-[1.25rem] text-[#ccc] max-w-[800px] mx-auto mb-12 leading-relaxed font-mono">
+            Challenge yourself with problems of varying difficulty and become 
+            <br />a better coder.
           </p>
-          <div className="flex justify-center gap-5 mb-10">
+          <div className="flex items-center justify-center gap-6">
             <button 
               onClick={scrollToProblems}
-              className="px-6 py-3 bg-[#ff8c00] text-[#222] font-semibold rounded-md hover:bg-[#ff9f33] transition-all hover:-translate-y-0.5"
+              className="px-8 py-4 bg-[#ff8c00] text-[#1E1E1E] text-lg font-bold rounded hover:bg-[#ff9f33] transition-all"
             >
-              Start Practicing
+              Start Solving
             </button>
             <button 
               onClick={scrollToProblems}
-              className="px-6 py-3 border-2 border-[#ff8c00] text-[#ff8c00] font-semibold rounded-md hover:bg-[#ff8c00]/10 transition-all hover:-translate-y-0.5"
+              className="px-8 py-4 border-2 border-[#ff8c00] text-[#ff8c00] text-lg font-bold rounded hover:bg-[#ff8c00]/10 transition-all"
             >
-              View Problems
+              Explore Contests
             </button>
           </div>
         </div>
